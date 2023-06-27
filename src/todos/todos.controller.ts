@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { CreateTodoDto } from './dtos/create-todo.dto';
 import { TodosService } from 'src/todos/todos.service';
+import { UpdateTodoDto } from 'src/todo/dto/update-todo.dto';
 //import { UpdateTodoDto } from 'src/todos/dtos/update-todo.dto';
 
 @Controller('todos')
@@ -32,10 +33,10 @@ export class TodosController {
     return this.todosService.findOne(id);
   }
 
-  // @Patch(':id')
-  // async update(@Body() dto: UpdateTodoDto, @Param('id') id: number){
-  //   return this.todosService.update(id, UpdateTodoDto);
-  // }
+  @Put(':id')
+  async update(@Param('id', new ParseIntPipe() ) id: number, @Body() dto: UpdateTodoDto) {
+    return this.todosService.update(id, dto);
+  }
 
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id) {
